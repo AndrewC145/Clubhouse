@@ -1,18 +1,19 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./Header";
-import Banner from "./Banner";
-import Post from "./Post";
+import Login from "./Login";
+import Register from "./Register";
+import Home from "./Home";
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <Header />
-      <main className="mx-auto max-w-[600px]">
-        <Banner />
-        <div>
-          <Post text="test" author="Andrew" date="123" description="lorem ipsum" id={1} />
-        </div>
-      </main>
-    </>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
