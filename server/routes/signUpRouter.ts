@@ -1,8 +1,11 @@
 import { Router } from 'express';
-import { signUpUser } from '../src/controllers/signUpController';
+import {
+  signUpUser,
+  registerValidation,
+} from '../src/controllers/signUpController';
 
 const signUpRouter = Router();
 
-signUpRouter.post('/', signUpUser);
+signUpRouter.post('/', ...registerValidation, signUpUser);
 
 export { signUpRouter };

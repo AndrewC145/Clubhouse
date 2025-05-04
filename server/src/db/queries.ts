@@ -13,6 +13,11 @@ async function searchUser(username: string) {
   ]);
 
   let user = rows[0];
+  if (!user) {
+    return null;
+  } else {
+    return user;
+  }
 }
 
 export { addUser };
