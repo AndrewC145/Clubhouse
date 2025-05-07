@@ -1,7 +1,8 @@
-import { addUser } from '../db/queries';
+import { addUser, searchUser } from '../db/queries';
 import { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
+import { error } from 'console';
 
 export const registerValidation = [
   body('fullName')
@@ -9,12 +10,17 @@ export const registerValidation = [
     .trim()
     .isAlpha('en-US', { ignore: ' ' })
     .withMessage('Fullname must be alphabetic and not empty'),
-
   body('username')
     .notEmpty()
     .trim()
     .isAlphanumeric()
-    .withMessage('Username must be alphanumeric and not empty'),
+    .withMessage('Username must be alphanumeric and not empty')
+    .custom(async (value) => {
+      const existingUser = await searchUser(value);
+      if (existingUser) {
+        throw new Error('Username already in use');
+      }
+    }),
 
   body('password')
     .exists({ checkFalsy: true })
@@ -30,14 +36,16 @@ export const registerValidation = [
 export async function signUpUser(req: Request, res: Response): Promise<any> {
   try {
     const errors = validationResult(req);
-    console.log(errors);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      const errArray = errors.array();
+      errArray.forEach((err) => {
+        res.status(400).json({ error: err.msg });
+      });
     }
     const { fullName, username, password } = req.body;
+
     let hashedPassword = await hashPassword(password);
     await addUser(fullName, username, hashedPassword);
-
     res.redirect('http://localhost:5173/');
   } catch (error) {
     console.error('Error in signUpUser:', error);

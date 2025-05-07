@@ -1,10 +1,16 @@
+import { useState } from "react";
+import axios from "axios";
 import FormTemp from "./FormTemp";
 import Input from "./Input";
 import FormButton from "./FormButton";
 
 function Register() {
+  const [errors, setErrors] = useState<string[]>([]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {};
+
   return (
-    <FormTemp title="Create A New Account" action="http://localhost:8080/register">
+    <FormTemp title="Create A New Account" action="" onSubmit={handleSubmit}>
       <Input type="text" id="fullName" name="fullName" label="Full Name" />
       <Input type="text" id="username" name="username" label="Username" />
       <Input type="password" id="password" name="password" label="Password" />

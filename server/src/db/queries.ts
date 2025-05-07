@@ -14,10 +14,10 @@ async function searchUser(username: string) {
 
   let user = rows[0];
   if (!user) {
-    return null;
+    return false;
   } else {
     return user;
   }
 }
 
-export { addUser };
+export { addUser, searchUser };
