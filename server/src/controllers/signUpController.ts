@@ -37,16 +37,14 @@ export async function signUpUser(req: Request, res: Response): Promise<any> {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      const errArray = errors.array();
-      errArray.forEach((err) => {
-        res.status(400).json({ error: err.msg });
-      });
+      const errorMessage = errors.array().map((err) => err.msg);
+      return res.status(400).json({ errors: errorMessage });
     }
     const { fullName, username, password } = req.body;
-
     let hashedPassword = await hashPassword(password);
+
     await addUser(fullName, username, hashedPassword);
-    res.redirect('http://localhost:5173/');
+    return res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
     console.error('Error in signUpUser:', error);
     return res.status(500).json({ error: 'Internal server error' });

@@ -4,7 +4,9 @@ import { signUpRouter } from '../routes/signUpRouter';
 
 const app = express();
 const corsOptions = {
-  origin: ['http://localhost:5173'],
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST'],
+  credentials: true,
 };
 
 const PORT = process.env.PORT || 3000;
