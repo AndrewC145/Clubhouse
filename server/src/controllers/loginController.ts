@@ -23,8 +23,17 @@ async function loginUser(req: Request, res: Response): Promise<any> {
     }
 
     const { username, password } = req.body;
+    let user = await compare(username, password);
+
+    if (user === null || user === false) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
+
+    return res.status(200).json({ message: 'Login successful', user });
   } catch (error) {
     console.error('Error in loginUser:', error);
     return res.status(500).json({ error: 'Internal server error' });
   }
 }
+
+export { loginUser, loginValidation };

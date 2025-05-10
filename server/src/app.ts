@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { signUpRouter } from '../routes/signUpRouter';
+import { loginRouter } from '../routes/loginRouter';
 
 const app = express();
 const corsOptions = {
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/register', signUpRouter);
+app.use('/login', loginRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
