@@ -4,7 +4,7 @@ import FormButton from "./FormButton";
 
 function Login() {
   return (
-    <FormTemp title="Login" action="/login">
+    <FormTemp title="Login">
       <Input type="text" id="username" name="username" label="Username" />
       <Input type="password" id="password" name="password" label="Password" />
       <FormButton text="Login" />

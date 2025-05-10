@@ -2,9 +2,8 @@ import { addUser, searchUser } from '../db/queries';
 import { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
-import { error } from 'console';
 
-export const registerValidation = [
+const registerValidation = [
   body('fullName')
     .notEmpty()
     .trim()
@@ -33,7 +32,7 @@ export const registerValidation = [
     .withMessage('Passwords do not match'),
 ];
 
-export async function signUpUser(req: Request, res: Response): Promise<any> {
+async function signUpUser(req: Request, res: Response): Promise<any> {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -56,3 +55,5 @@ async function hashPassword(password: string): Promise<string> {
   const hashedPassword = await bcrypt.hash(password, salt);
   return hashedPassword;
 }
+
+export { registerValidation, signUpUser, hashPassword };

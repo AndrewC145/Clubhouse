@@ -1,4 +1,5 @@
 import pool from './pool';
+import { hashPassword } from '../controllers/signUpController';
 
 async function addUser(fullname: string, username: string, password: string) {
   await pool.query(
@@ -12,11 +13,20 @@ async function searchUser(username: string) {
     username,
   ]);
 
-  let user = rows[0];
+  const user = rows[0];
   if (!user) {
     return false;
   } else {
     return user;
+  }
+}
+
+async function compare(username: string, password: string) {
+  const hashedPassword = hashPassword(password);
+  const user = searchUser(username);
+
+  if (!user) {
+    return false;
   }
 }
 

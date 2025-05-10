@@ -23,11 +23,13 @@ function Register() {
       if (response.status === 201) {
         const msg = response.data.message;
         setSuccess(msg);
+        setErrors([]);
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const errors = error.response.data.errors;
       setErrors(errors);
+      setSuccess("");
     }
   };
 
@@ -43,7 +45,7 @@ function Register() {
             return <div key={index}>{err}</div>;
           })}
       </div>
-      <div className="space-y-2 text-green-400">{success && <div>{success}</div>}</div>
+      {success && <p className="text-green-400">{success}</p>}
       <FormButton text="Register" />
     </FormTemp>
   );
