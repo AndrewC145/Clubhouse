@@ -22,8 +22,14 @@ const registerValidation = [
     }),
 
   body('password')
+    .notEmpty()
+    .trim()
     .exists({ checkFalsy: true })
-    .withMessage('Password is required'),
+    .withMessage('Password is required')
+    .isLength({ min: 6 })
+    .withMessage('Password must be at least 6 characters long')
+    .matches(/\d/)
+    .withMessage('Password must contain at least one number'),
 
   body('confirmPassword')
     .exists({ checkFalsy: true })
