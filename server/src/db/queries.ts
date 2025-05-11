@@ -1,5 +1,4 @@
 import pool from './pool';
-import { hashPassword } from '../controllers/signUpController';
 import bcrypt from 'bcryptjs';
 
 async function addUser(
@@ -28,13 +27,12 @@ async function searchUser(username: string): Promise<any> {
 
 async function compare(username: string, password: string): Promise<any> {
   const user = await searchUser(username);
-  const hashedPassword = await hashPassword(password);
-
   if (!user) {
     return null;
   }
 
-  return await bcrypt.compare(user.password, hashedPassword);
+  const isMatch = await bcrypt.compare(password, user.password);
+  return isMatch ? user : false;
 }
 
 export { addUser, searchUser, compare };

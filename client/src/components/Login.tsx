@@ -6,6 +6,7 @@ import FormButton from "./FormButton";
 
 function Login() {
   const [username, setUsername] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
   const [errors, setErrors] = useState<string>("");
 
   const fetchUser = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -21,7 +22,10 @@ function Login() {
         withCredentials: true,
       });
       if (response.status === 200) {
-        console.log(response);
+        const username = response.data.user.username;
+        setUsername(username);
+        setSuccess(response.data.message);
+        setErrors("");
       }
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,7 +39,8 @@ function Login() {
     <FormTemp onSubmit={fetchUser} title="Login">
       <Input type="text" id="username" name="username" label="Username" />
       <Input type="password" id="password" name="password" label="Password" />
-      <div className="space-y-2 text-red-400">{errors && <div>{errors}</div>}</div>
+      <div className="space-y-2 text-red-400">{errors && <p>{errors}</p>}</div>
+      {success && <p className="text-green-400">{success}</p>}
       <FormButton text="Login" />
     </FormTemp>
   );

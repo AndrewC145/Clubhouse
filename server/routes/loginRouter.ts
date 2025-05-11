@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { loginUser, loginValidation } from '../src/controllers/loginController';
+import { loginValidation, loginUser } from '../src/controllers/loginController';
+import passport from 'passport';
 
 const loginRouter = Router();
 
