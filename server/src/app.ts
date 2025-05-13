@@ -27,6 +27,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: { secure: false },
   })
 );
 app.use(passport.initialize());
@@ -34,6 +35,13 @@ app.use(passport.session());
 
 app.use('/register', signUpRouter);
 app.use('/login', loginRouter);
+app.get('/', (req: Request, res: Response) => {
+  if (req.isAuthenticated()) {
+    res.status(200).json({ user: req.user });
+  } else {
+    res.status(401).json({ message: 'Unauthorized' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

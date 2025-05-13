@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext";
 
 function Header() {
   return (
@@ -9,16 +11,27 @@ function Header() {
         </Link>
         <div className="space-x-6">
           <Links text="Sign up" link="/register" />
-          <Links text="Log in" link="/login" />
+          <LogLink />
         </div>
       </nav>
     </header>
   );
 }
 
-function Links({ text, link }: { text: string; link: string }) {
+function LogLink() {
+  const { user, logoutUser } = useContext(AuthContext);
+
+  if (user) {
+    return <Links text="Log out" link="/logout" onClick={logoutUser} />;
+  }
+
+  return <Links text="Log in" link="/login" />;
+}
+
+function Links({ text, link, onClick }: { text: string; link: string; onClick?: () => void }) {
   return (
     <Link
+      onClick={onClick}
       to={link}
       className="md:text-md cursor-pointer rounded-lg bg-red-300 p-3 text-sm transition duration-200 hover:bg-red-400 lg:text-base 2xl:text-xl"
     >
