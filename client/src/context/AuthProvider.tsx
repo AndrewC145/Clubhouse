@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logoutUser = async () => {
     try {
-      await axios.post(
+      const response = await axios.post(
         "http://localhost:8080/logout",
         {},
         {
@@ -39,8 +39,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           withCredentials: true,
         },
       );
-      setUser(null);
-      navigate("/login", { replace: true });
+      if (response.status === 200) {
+        setUser(null);
+        navigate("/login", { replace: true });
+      }
     } catch (error: any) {
       console.error("Error logging out:", error);
     }
