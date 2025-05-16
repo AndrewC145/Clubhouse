@@ -1,4 +1,6 @@
 import Banner from "./Banner";
+import Post from "./Post";
+import { useEffect } from "react";
 
 function Home() {
   return (

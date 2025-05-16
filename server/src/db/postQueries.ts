@@ -1,17 +1,14 @@
 import pool from './pool';
-import { searchUser } from './queries';
 
 async function addPost(
-  user: any,
+  user: number,
   title: string,
   content: string,
   createdDate: Date
 ): Promise<void> {
-  const postCreator = await searchUser(user.username);
-
   await pool.query(
-    'INSERT INTO posts (user_id, title, content, created_time) VALUES ($1, $2, $3, $4',
-    [postCreator.id, title, content, createdDate]
+    'INSERT INTO posts (user_id, title, content, created_time) VALUES ($1, $2, $3, $4)',
+    [user, title, content, createdDate]
   );
 }
 
