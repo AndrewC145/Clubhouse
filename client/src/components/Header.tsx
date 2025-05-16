@@ -22,7 +22,12 @@ function LogLink() {
   const { user, logoutUser } = useContext(AuthContext);
 
   if (user) {
-    return <Links text="Log out" link="/logout" onClick={logoutUser} />;
+    return (
+      <>
+        <Links text={"Create a Post"} link="/create" />
+        <Links text="Log out" link="/logout" onClick={logoutUser} />
+      </>
+    );
   }
 
   return <Links text="Log in" link="/login" />;
