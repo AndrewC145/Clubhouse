@@ -42,8 +42,6 @@ app.use('/create', postRouter);
 app.get('/', (req: Request, res: Response) => {
   if (req.isAuthenticated()) {
     res.status(200).json({ user: req.user });
-  } else {
-    res.status(401).json({ message: 'Unauthorized' });
   }
 });
 

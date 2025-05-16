@@ -2,8 +2,20 @@ import FormTemp from "./FormTemp";
 import FormButton from "./FormButton";
 import Input from "./Input";
 import axios from "axios";
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext";
 
 function CreatePost() {
+  const { user } = useContext(AuthContext);
+
+  if (!user) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <h1 className="text-3xl text-white">You need to be logged in to create a post</h1>
+      </div>
+    );
+  }
+
   const fetchPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -16,7 +28,7 @@ function CreatePost() {
         },
         withCredentials: true,
       });
-      console.log(response);
+      console.log("Post created successfully:", response.data);
     } catch (error) {
       console.error("Error creating post:", error);
     }
