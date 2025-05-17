@@ -1,9 +1,8 @@
 import FormTemp from "./FormTemp";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import FormButton from "./FormButton";
 import Input from "./Input";
 import axios from "axios";
-import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 
 function CreatePost() {

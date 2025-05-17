@@ -1,7 +1,8 @@
 import Banner from "./Banner";
 import Post from "./Post";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import AuthContext from "../context/AuthContext";
 
 type PostType = {
   id: number;
@@ -13,6 +14,7 @@ type PostType = {
 
 function Home() {
   const [posts, setPosts] = useState<PostType[]>([]);
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -37,16 +39,29 @@ function Home() {
           {posts.length > 0 &&
             posts.map((post) => {
               const formattedDate = new Date(post.created_date).toLocaleDateString("en-US");
-              return (
-                <Post
-                  key={post.id}
-                  text={post.title}
-                  author={post.author}
-                  date={formattedDate}
-                  description={post.content}
-                  id={post.id}
-                />
-              );
+              if (!user) {
+                return (
+                  <Post
+                    key={post.id}
+                    text={"*****"}
+                    author={"*****"}
+                    date={formattedDate}
+                    description={post.content}
+                    id={post.id}
+                  />
+                );
+              } else {
+                return (
+                  <Post
+                    key={post.id}
+                    text={post.title}
+                    author={post.author}
+                    date={formattedDate}
+                    description={post.content}
+                    id={post.id}
+                  />
+                );
+              }
             })}
         </div>
       </div>

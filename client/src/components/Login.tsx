@@ -18,7 +18,7 @@ function Login() {
       if (isLoggedIn) {
         navigate("/", { replace: true });
       }
-    }, 3000);
+    }, 2000);
   }, [isLoggedIn, navigate]);
 
   const fetchUser = async (e: React.FormEvent<HTMLFormElement>) => {
