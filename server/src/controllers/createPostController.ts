@@ -1,6 +1,7 @@
 import { addPost } from '../db/postQueries';
 import { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
+import { format } from 'date-fns';
 
 type User = {
   id: number;
@@ -31,7 +32,12 @@ async function createPost(req: Request, res: Response): Promise<any> {
     const user = req.user as User;
     const { title, content } = req.body;
 
-    await addPost(user.username, title, content, new Date().toISOString());
+    await addPost(
+      user.username,
+      title,
+      content,
+      format(new Date(), 'yyyy-MM-dd')
+    );
     return res.status(201).json({ message: 'Post created successfully' });
   } catch (error) {
     console.error('Error in createPost:', error);

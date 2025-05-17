@@ -35,16 +35,19 @@ function Home() {
         <Banner />
         <div className="w-full space-y-5">
           {posts.length > 0 &&
-            posts.map((post) => (
-              <Post
-                key={post.id}
-                text={post.title}
-                author={post.author}
-                date={post.created_date}
-                description={post.content}
-                id={post.id}
-              />
-            ))}
+            posts.map((post) => {
+              const formattedDate = new Date(post.created_date).toLocaleDateString("en-US");
+              return (
+                <Post
+                  key={post.id}
+                  text={post.title}
+                  author={post.author}
+                  date={formattedDate}
+                  description={post.content}
+                  id={post.id}
+                />
+              );
+            })}
         </div>
       </div>
     </main>
