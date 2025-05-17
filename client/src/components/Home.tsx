@@ -39,29 +39,25 @@ function Home() {
           {posts.length > 0 &&
             posts.map((post) => {
               const formattedDate = new Date(post.created_date).toLocaleDateString("en-US");
-              if (!user) {
-                return (
-                  <Post
-                    key={post.id}
-                    text={"*****"}
-                    author={"*****"}
-                    date={formattedDate}
-                    description={post.content}
-                    id={post.id}
-                  />
-                );
-              } else {
-                return (
-                  <Post
-                    key={post.id}
-                    text={post.title}
-                    author={post.author}
-                    date={formattedDate}
-                    description={post.content}
-                    id={post.id}
-                  />
-                );
-              }
+              return !user ? (
+                <Post
+                  key={post.id}
+                  text={"*****"}
+                  author={"*****"}
+                  date={formattedDate}
+                  description={post.content}
+                  id={post.id}
+                />
+              ) : (
+                <Post
+                  key={post.id}
+                  text={post.title}
+                  author={post.author}
+                  date={formattedDate}
+                  description={post.content}
+                  id={post.id}
+                />
+              );
             })}
         </div>
       </div>
