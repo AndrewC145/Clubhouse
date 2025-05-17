@@ -1,14 +1,14 @@
 import pool from './pool';
 
 async function addPost(
-  user: number,
+  author: string,
   title: string,
   content: string,
-  createdDate: Date
+  created_time: string
 ): Promise<void> {
   await pool.query(
-    'INSERT INTO posts (user_id, title, content, created_time) VALUES ($1, $2, $3, $4)',
-    [user, title, content, createdDate]
+    'INSERT INTO posts (author, title, content, created_date) VALUES ($1, $2, $3, $4)',
+    [author, title, content, created_time]
   );
 }
 

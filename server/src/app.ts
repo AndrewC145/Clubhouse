@@ -6,6 +6,7 @@ import { signUpRouter } from '../routes/signUpRouter';
 import { loginRouter } from '../routes/loginRouter';
 import logoutRouter from '../routes/logoutRouter';
 import postRouter from '../routes/createRouter';
+import { getPosts } from './db/postQueries';
 
 const app = express();
 const corsOptions = {
@@ -39,10 +40,12 @@ app.use('/register', signUpRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
 app.use('/create', postRouter);
-app.get('/', (req: Request, res: Response) => {
-  if (req.isAuthenticated()) {
-    res.status(200).json({ user: req.user });
-  }
+app.get('/', async (req: Request, res: Response) => {
+  const posts = await getPosts();
+  res.status(200).json({
+    user: req.isAuthenticated() ? req.user : null,
+    posts,
+  });
 });
 
 app.listen(PORT, () => {

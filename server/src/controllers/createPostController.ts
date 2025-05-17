@@ -31,7 +31,7 @@ async function createPost(req: Request, res: Response): Promise<any> {
     const user = req.user as User;
     const { title, content } = req.body;
 
-    await addPost(user.id, title, content, new Date());
+    await addPost(user.username, title, content, new Date().toISOString());
     return res.status(201).json({ message: 'Post created successfully' });
   } catch (error) {
     console.error('Error in createPost:', error);
