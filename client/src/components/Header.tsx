@@ -8,7 +8,7 @@ function Header() {
     <header className="mx-auto max-w-[1200px]">
       <nav className="flex items-center justify-between border-b-2 border-b-gray-50 p-3 text-white">
         <Link to="/">
-          <h1 className="md:text-md font-mono text-sm lg:text-lg xl:text-2xl">Clubhouse</h1>
+          <h1 className="md:text-md font-mono text-base lg:text-lg xl:text-2xl">Clubhouse</h1>
         </Link>
         <div className="hidden items-center space-x-6 sm:flex">
           <Links text="Sign up" link="/register" />

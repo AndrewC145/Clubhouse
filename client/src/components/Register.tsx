@@ -48,7 +48,7 @@ function Register() {
         <label htmlFor="adminPerms">Click this for a secret</label>
         <input type="checkbox" id="adminPerms" name="adminPerms" />
       </div>
-      <Errors errors={errors} />
+      {errors.length > 0 && <Errors errors={errors} />}
       {success && <p className="text-green-400">{success}</p>}
       <FormButton text="Register" />
     </FormTemp>
