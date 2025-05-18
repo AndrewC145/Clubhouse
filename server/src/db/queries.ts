@@ -4,11 +4,12 @@ import bcrypt from 'bcryptjs';
 async function addUser(
   fullname: string,
   username: string,
-  password: string
+  password: string,
+  adminPerms: boolean
 ): Promise<void> {
   await pool.query(
-    'INSERT INTO users (fullname, username, password) VALUES ($1, $2, $3)',
-    [fullname, username, password]
+    'INSERT INTO users (fullname, username, password, is_admin) VALUES ($1, $2, $3, $4)',
+    [fullname, username, password, adminPerms]
   );
 }
 

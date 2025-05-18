@@ -6,12 +6,13 @@ import { signUpRouter } from '../routes/signUpRouter';
 import { loginRouter } from '../routes/loginRouter';
 import logoutRouter from '../routes/logoutRouter';
 import postRouter from '../routes/createRouter';
+import deleteRouter from '../routes/deleteRouter';
 import { getPosts } from './db/postQueries';
 
 const app = express();
 const corsOptions = {
   origin: 'http://localhost:5173',
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'DELETE'],
   credentials: true,
 };
 
@@ -47,6 +48,8 @@ app.get('/', async (req: Request, res: Response) => {
     posts,
   });
 });
+
+app.use('/posts', deleteRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

@@ -21,7 +21,6 @@ function Home() {
         const response = await axios.get("http://localhost:8080/", {
           withCredentials: true,
         });
-        console.log(response.data);
         const post = response.data.posts;
         setPosts(post);
       } catch (error) {
@@ -30,7 +29,7 @@ function Home() {
     };
 
     fetchPosts();
-  }, []);
+  }, [posts]);
   return (
     <main className="flex w-full justify-center">
       <div className="flex w-full max-w-[700px] flex-col items-center justify-center p-3">

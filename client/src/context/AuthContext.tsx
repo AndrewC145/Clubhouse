@@ -4,6 +4,7 @@ import { createContext, Dispatch, SetStateAction } from "react";
 type AuthContextType = {
   user: any;
   setUser: Dispatch<SetStateAction<any>>;
+  admin?: boolean;
   logoutUser: () => Promise<void>;
 };
 

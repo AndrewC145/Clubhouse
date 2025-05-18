@@ -17,7 +17,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           },
           withCredentials: true,
         });
-        setUser(response.data.user.username);
+        setUser(response.data.user);
       } catch (error) {
         console.error("Error fetching user:", error);
         setUser(null);
@@ -48,7 +48,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const admin = user?.is_admin === true;
+
   return (
-    <AuthContext.Provider value={{ user, setUser, logoutUser }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, setUser, admin, logoutUser }}>
+      {children}
+    </AuthContext.Provider>
   );
 }

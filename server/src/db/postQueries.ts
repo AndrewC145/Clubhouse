@@ -17,4 +17,8 @@ async function getPosts(): Promise<any> {
   return rows;
 }
 
-export { addPost, getPosts };
+async function deletePost(id: number): Promise<void> {
+  await pool.query('DELETE FROM posts WHERE id = $1', [id]);
+}
+
+export { addPost, getPosts, deletePost };

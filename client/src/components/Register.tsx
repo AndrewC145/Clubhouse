@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import FormTemp from "./FormTemp";
 import Input from "./Input";
 import FormButton from "./FormButton";
+import Errors from "./Errors";
+import AuthContext from "../context/AuthContext";
 
 function Register() {
   const [errors, setErrors] = useState<string[]>([]);
   const [success, setSuccess] = useState<string>("");
+
+  const { setUser } = useContext(AuthContext);
 
   const fetchData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,6 +26,7 @@ function Register() {
       });
       if (response.status === 201) {
         const msg = response.data.message;
+        setUser(response.data.user);
         setSuccess(msg);
         setErrors([]);
       }
@@ -39,12 +44,11 @@ function Register() {
       <Input type="text" id="username" name="username" label="Username" />
       <Input type="password" id="password" name="password" label="Password" />
       <Input type="password" id="confirmPassword" name="confirmPassword" label="Confirm Password" />
-      <div className="space-y-2 text-red-400">
-        {errors &&
-          errors.map((err, index) => {
-            return <div key={index}>{err}</div>;
-          })}
+      <div className="flex items-center gap-3">
+        <label htmlFor="adminPerms">Click this for a secret</label>
+        <input type="checkbox" id="adminPerms" name="adminPerms" />
       </div>
+      <Errors errors={errors} />
       {success && <p className="text-green-400">{success}</p>}
       <FormButton text="Register" />
     </FormTemp>

@@ -45,11 +45,17 @@ async function signUpUser(req: Request, res: Response): Promise<any> {
       const errorMessage = errors.array().map((err) => err.msg);
       return res.status(400).json({ errors: errorMessage });
     }
-    const { fullName, username, password } = req.body;
+    const { fullName, username, password, adminPerms } = req.body;
+    let isAdmin: boolean = false;
+
+    if (adminPerms) {
+      isAdmin = true;
+    }
+
     let hashedPassword = await hashPassword(password);
 
-    await addUser(fullName, username, hashedPassword);
-    return res.status(201).json({ message: 'User created successfully' });
+    await addUser(fullName, username, hashedPassword, isAdmin);
+    res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
     console.error('Error in signUpUser:', error);
     return res.status(500).json({ error: 'Internal server error' });

@@ -34,8 +34,7 @@ function Login() {
         withCredentials: true,
       });
       if (response.status === 200) {
-        const username = response.data.user.username;
-        setUser(username);
+        setUser(response.data.user);
         setIsLoggedIn(true);
         setSuccess(response.data.message);
         setErrors("");
