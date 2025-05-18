@@ -1,17 +1,21 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useState, useContext } from "react";
+import Hamburger from "hamburger-react";
 import AuthContext from "../context/AuthContext";
 
 function Header() {
   return (
     <header className="mx-auto max-w-[1200px]">
-      <nav className="flex items-center justify-between border-b-2 border-b-gray-500 p-3 text-white md:p-4 xl:p-5">
+      <nav className="flex items-center justify-between border-b-2 border-b-gray-50 p-3 text-white">
         <Link to="/">
           <h1 className="md:text-md font-mono text-sm lg:text-lg xl:text-2xl">Clubhouse</h1>
         </Link>
-        <div className="space-x-6">
+        <div className="hidden items-center space-x-6 sm:flex">
           <Links text="Sign up" link="/register" />
           <LogLink />
+        </div>
+        <div className="sm:hidden">
+          <MobileHeader />
         </div>
       </nav>
     </header>
@@ -42,6 +46,22 @@ function Links({ text, link, onClick }: { text: string; link: string; onClick?: 
     >
       {text}
     </Link>
+  );
+}
+
+function MobileHeader() {
+  const [isOpen, setOpen] = useState<boolean>(false);
+
+  return (
+    <div className="relative w-full sm:hidden">
+      <Hamburger toggled={isOpen} toggle={setOpen} />
+      {isOpen && (
+        <div className="absolute top-12 right-0 flex w-[100px] flex-col items-center gap-3 bg-gray-800 p-4 text-nowrap">
+          <Links text="Sign up" link="/register" />
+          <LogLink />
+        </div>
+      )}
+    </div>
   );
 }
 
