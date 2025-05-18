@@ -8,7 +8,7 @@ function Banner() {
   if (user) {
     return (
       <div className="my-6 w-full rounded-xl border-1 border-green-300 bg-green-400 p-3 text-center md:p-4">
-        <p className="inline-block text-white">Welcome back, {user}!</p>
+        <p className="inline-block text-white">Welcome back, {user.username}!</p>
       </div>
     );
   }

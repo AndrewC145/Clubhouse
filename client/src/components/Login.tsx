@@ -56,7 +56,7 @@ function Login() {
       <div className="space-y-2 text-red-400">{errors && <p>{errors}</p>}</div>
       {success && (
         <p className="text-green-400">
-          {success}! Hi there {user}. Redirecting...
+          {success}! Hi there {user.username}. Redirecting...
         </p>
       )}
       <FormButton text="Login" />
